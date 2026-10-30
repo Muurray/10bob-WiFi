@@ -2,44 +2,35 @@
 
 @section('content')
 
-<h2>Buy Internet</h2>
+<div class="row justify-content-center">
+	<div class="col-md-7 col-lg-5">
+		<h1 class="h2">Buy internet</h1>
+		<p class="fs-4 fw-semibold mb-1">KSh 10</p>
+		<p class="text-secondary mb-4">12 hours of 10bob WiFi</p>
 
-<form>
+		<form aria-label="WiFi payment details">
+			<div class="mb-3">
+				<label for="phone" class="form-label">Phone number</label>
+				<input
+					id="phone"
+					name="phone"
+					type="tel"
+					class="form-control"
+					autocomplete="tel"
+					placeholder="07XX XXX XXX"
+					required
+				>
+			</div>
 
-<div class="mb-3">
+			<button type="button" class="btn btn-success" disabled>
+				M-Pesa payments unavailable
+			</button>
+		</form>
 
-<label>Phone Number</label>
-
-<input
-class="form-control"
-placeholder="2547XXXXXXXX">
-
+		<p class="small text-secondary mt-3" role="status">
+			Payments are unavailable while phone-only checkout is confirmed with Paystack.
+		</p>
+	</div>
 </div>
-
-<div class="mb-3">
-
-<label>Select Package</label>
-
-<select class="form-control">
-
-<option>10 Bob - 1 Hour</option>
-
-<option>20 Bob - 3 Hours</option>
-
-<option>50 Bob - 1 Day</option>
-
-<option>100 Bob - 3 Days</option>
-
-</select>
-
-</div>
-
-<button class="btn btn-success">
-
-Pay with M-Pesa
-
-</button>
-
-</form>
 
 @endsection

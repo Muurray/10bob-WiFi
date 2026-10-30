@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\PaymentController;
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PackageController;
@@ -14,9 +15,7 @@ Route::get('/voucher', function () {
     return view('customer.voucher');
 });
 
-Route::get('/buy', function () {
-    return "M-Pesa Payment Page Coming Soon";
-});
+Route::get('/buy', [PaymentController::class, 'show'])->name('payments.show');
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +28,5 @@ Route::get('/admin/login', function () {
 });
 
 Route::post('/admin/login', [DashboardController::class, 'index']);
-
-});
 
 Route::get('/admin/dashboard', [DashboardController::class, 'index']);
