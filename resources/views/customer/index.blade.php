@@ -52,72 +52,30 @@ width="300">
 
 </div>
 
-<hr>
+<section class="container py-5" id="packages">
+	<div class="text-center mb-4">
+		<h2>Available Packages</h2>
+		<p class="text-muted">Choose an affordable internet package.</p>
+	</div>
 
-<h3 class="mt-5">
-
-Available Packages
-
-</h3>
-
-<table class="table table-striped">
-
-<thead>
-
-<tr>
-
-<th>Price</th>
-
-<th>Duration</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-
-<td>10 KES</td>
-
-<td>1 Hour</td>
-
-</tr>
-
-<tr>
-
-<td>20 KES</td>
-
-<td>3 Hours</td>
-
-</tr>
-
-<tr>
-
-<td>50 KES</td>
-
-<td>24 Hours</td>
-
-</tr>
-
-<tr>
-
-<td>100 KES</td>
-
-<td>3 Days</td>
-
-</tr>
-
-<tr>
-
-<td>200 KES</td>
-
-<td>7 Days</td>
-
-</tr>
-
-</tbody>
-
-</table>
+	<div class="row g-4 justify-content-center">
+		@forelse ($packages as $package)
+			<div class="col-6 col-md-4 col-lg-2">
+				<div class="card h-100 shadow-sm text-center">
+					<div class="card-body d-flex flex-column">
+						<h3 class="text-success">KSh {{ number_format((float) $package->price, 0) }}</h3>
+						<p class="text-muted mb-2">{{ $package->duration }} {{ $package->unit }}</p>
+						<span class="badge text-bg-success align-self-center mb-3">Available</span>
+						<a href="{{ route('payments.show', $package) }}" class="btn btn-success w-100 mt-auto">
+							Buy Now
+						</a>
+					</div>
+				</div>
+			</div>
+		@empty
+			<p class="text-center text-muted">No internet packages are available right now.</p>
+		@endforelse
+	</div>
+</section>
 
 @endsection

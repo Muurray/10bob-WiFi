@@ -63,56 +63,6 @@ Dashboard
 
 </div>
 
-</nav><nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-
-<div class="container">
-
-<a class="navbar-brand" href="/">
-10bob WiFi
-</a>
-
-<button class="navbar-toggler"
-data-bs-toggle="collapse"
-data-bs-target="#menu">
-
-<span class="navbar-toggler-icon"></span>
-
-</button>
-
-<div class="collapse navbar-collapse" id="menu">
-
-<ul class="navbar-nav ms-auto">
-
-<li class="nav-item">
-<a class="nav-link" href="/">
-Home
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link" href="/buy">
-Buy Internet
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link" href="/voucher">
-Voucher
-</a>
-</li>
-
-<li class="nav-item">
-<a class="nav-link" href="/admin/dashboard">
-Dashboard
-</a>
-</li>
-
-</ul>
-
-</div>
-
-</div>
-
 </nav>
 
 <div class="container mt-5">

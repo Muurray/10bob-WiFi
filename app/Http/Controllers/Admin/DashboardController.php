@@ -14,7 +14,8 @@ class DashboardController extends Controller
 
         $active = Customer::where('active', true)->count();
 
-        $sales = Payment::whereDate('created_at', today())
+        $sales = Payment::where('status', 'Success')
+            ->whereDate('created_at', today())
             ->sum('amount');
 
         $expired = Customer::where('active', false)->count();

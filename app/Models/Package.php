@@ -19,4 +19,9 @@ class Package extends Model
         'active'
 
     ];
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }
