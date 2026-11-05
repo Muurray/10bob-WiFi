@@ -22,9 +22,15 @@ class PackageController extends Controller
 
     public function store(Request $request)
     {
-        Package::create($request->all());
+        Package::create($request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'price' => ['required', 'numeric', 'min:0'],
+            'duration' => ['required', 'integer', 'min:1'],
+            'unit' => ['required', 'in:Hour,Hours,Day,Days'],
+            'device_limit' => ['required', 'integer', 'in:1,2'],
+        ]));
 
-        return redirect()->route('packages.index')
-            ->with('success','Package created.');
+        return redirect()->route('admin.packages.index')
+            ->with('success', 'Package created.');
     }
 }

@@ -1,61 +1,55 @@
-@extends('layouts.app')
+@extends('layouts.portal')
+
+@section('title', 'Checkout | 10bob WiFi')
 
 @section('content')
+<section class="portal-panel checkout-panel" aria-labelledby="checkout-title">
+    <a class="back-link" href="{{ route('home', $portalContext) }}"><span aria-hidden="true">&#8592;</span> All packages</a>
 
-<div class="row justify-content-center">
-	<div class="col-md-7 col-lg-5">
-		<h1 class="h2">Buy internet</h1>
-		<p class="fs-4 fw-semibold mb-1">KSh {{ number_format((float) $package->price, 0) }}</p>
-		<p class="text-secondary mb-4">{{ $package->duration }} {{ $package->unit }} package</p>
+    <header class="checkout-heading">
+        <p class="eyebrow">SECURE CHECKOUT</p>
+        <h1 id="checkout-title">{{ $package->name }}</h1>
+        <p class="intro-copy">{{ $package->duration }} {{ $package->unit }} of Wi-Fi access</p>
+    </header>
 
-		<form method="POST" action="{{ route('payments.initialize', $package) }}" aria-label="WiFi payment details">
-			@csrf
-			<div class="mb-3">
-				<label for="email" class="form-label">Email address</label>
-				<input
-					id="email"
-					name="email"
-					type="email"
-					class="form-control @error('email') is-invalid @enderror"
-					value="{{ old('email') }}"
-					autocomplete="email"
-					required
-				>
-				@error('email')
-					<div class="invalid-feedback">{{ $message }}</div>
-				@enderror
-			</div>
+    <div class="checkout-total">
+        <span>Total to pay</span>
+        <strong>KSh {{ number_format((float) $package->price, 0) }}</strong>
+    </div>
 
-			<div class="mb-3">
-				<label for="phone" class="form-label">Phone number</label>
-				<input
-					id="phone"
-					name="phone"
-					type="tel"
-					class="form-control @error('phone') is-invalid @enderror"
-					value="{{ old('phone') }}"
-					autocomplete="tel"
-					placeholder="07XX XXX XXX"
-					required
-				>
-				@error('phone')
-					<div class="invalid-feedback">{{ $message }}</div>
-				@enderror
-			</div>
+    <form method="POST" action="{{ route('payments.initialize', $package) }}" class="checkout-form" aria-label="Wi-Fi payment details">
+        @csrf
+        @if (!empty($portalContext['ip']))
+            <input type="hidden" name="device_ip" value="{{ $portalContext['ip'] }}">
+        @endif
+        @if (!empty($portalContext['mac']))
+            <input type="hidden" name="device_mac" value="{{ $portalContext['mac'] }}">
+        @endif
+        @foreach (['link-login-only', 'link-orig'] as $contextKey)
+            @if (!empty($portalContext[$contextKey]))
+                <input type="hidden" name="{{ $contextKey }}" value="{{ $portalContext[$contextKey] }}">
+            @endif
+        @endforeach
 
-			@error('payment')
-				<p class="text-danger" role="alert">{{ $message }}</p>
-			@enderror
+        <div class="field-group">
+            <label for="phone">Phone number</label>
+            <input id="phone" name="phone" type="tel" inputmode="tel" class="@error('phone') input-error @enderror" value="{{ old('phone') }}" autocomplete="tel" placeholder="07XX XXX XXX" required>
+            @error('phone')<span class="field-error">{{ $message }}</span>@enderror
+        </div>
 
-			<button type="submit" class="btn btn-success">
-				Continue to payment
-			</button>
-		</form>
+        <div class="field-group">
+            <label for="email">Email for payment receipt</label>
+            <input id="email" name="email" type="email" inputmode="email" class="@error('email') input-error @enderror" value="{{ old('email') }}" autocomplete="email" placeholder="you@example.com" required>
+            @error('email')<span class="field-error">{{ $message }}</span>@enderror
+        </div>
 
-		<p class="small text-secondary mt-3" role="status">
-			After payment confirmation, Wi-Fi access still requires hotspot provisioning by the administrator.
-		</p>
-	</div>
-</div>
+        @error('payment')
+            <p class="form-alert" role="alert">{{ $message }}</p>
+        @enderror
 
+        <button class="primary-button" type="submit">Continue to Paystack <span aria-hidden="true">&#8594;</span></button>
+    </form>
+
+    <p class="portal-legal">Your connection is activated after payment verification.</p>
+</section>
 @endsection

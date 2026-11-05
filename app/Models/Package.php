@@ -16,6 +16,8 @@ class Package extends Model
 
         'unit',
 
+        'device_limit',
+
         'active'
 
     ];

@@ -17,6 +17,10 @@ class Payment extends Model
         'reference',
         'access_expires_at',
         'payment_channel',
+        'device_ip',
+        'device_mac',
+        'router_login_url',
+        'router_redirect_url',
     ];
 
     protected function casts(): array
@@ -29,5 +33,10 @@ class Payment extends Model
     public function package()
     {
         return $this->belongsTo(Package::class);
+    }
+
+    public function hotspotUser()
+    {
+        return $this->hasOne(HotspotUser::class);
     }
 }

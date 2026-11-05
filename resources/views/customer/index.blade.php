@@ -1,81 +1,62 @@
-@extends('layouts.app')
+@extends('layouts.portal')
+
+@section('title', 'Choose a package | 10bob WiFi')
 
 @section('content')
+<section class="portal-panel" aria-labelledby="portal-title">
+	<header class="portal-heading">
+		<div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+		<p class="eyebrow">CONNECTED TO 10BOB</p>
+		<h1 id="portal-title">Internet, on your terms.</h1>
+		<p class="intro-copy">Choose a package to get online.</p>
+	</header>
 
-<div class="row">
-
-<div class="col-md-6">
-
-<h1 class="display-4">
-10bob WiFi
-</h1>
-
-<p class="lead">
-
-Fast • Affordable • Reliable Internet
-
-</p>
-
-<p>
-
-Connect instantly using M-Pesa or Voucher.
-
-</p>
-
-<a href="/buy" class="btn btn-success btn-lg">
-
-Buy Internet
-
-</a>
-
-<a href="/voucher"
-class="btn btn-outline-primary btn-lg">
-
-Use Voucher
-
-</a>
-<a href="/admin/login"
-class="btn btn-dark">
-
-Administrator Login
-
-</a>
-</div>
-
-<div class="col-md-6 text-center">
-
-<img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png"
-
-width="300">
-
-</div>
-
-</div>
-
-<section class="container py-5" id="packages">
-	<div class="text-center mb-4">
-		<h2>Available Packages</h2>
-		<p class="text-muted">Choose an affordable internet package.</p>
+	<div class="connection-note">
+		<span class="connection-dot" aria-hidden="true"></span>
+		<span>Choose a plan. Pay securely. Get connected.</span>
 	</div>
 
-	<div class="row g-4 justify-content-center">
-		@forelse ($packages as $package)
-			<div class="col-6 col-md-4 col-lg-2">
-				<div class="card h-100 shadow-sm text-center">
-					<div class="card-body d-flex flex-column">
-						<h3 class="text-success">KSh {{ number_format((float) $package->price, 0) }}</h3>
-						<p class="text-muted mb-2">{{ $package->duration }} {{ $package->unit }}</p>
-						<span class="badge text-bg-success align-self-center mb-3">Available</span>
-						<a href="{{ route('payments.show', $package) }}" class="btn btn-success w-100 mt-auto">
-							Buy Now
-						</a>
-					</div>
-				</div>
+	<div class="support-strip">
+		<strong>Need help?</strong>
+		<a href="tel:+254743980340">Call</a>
+		<span>or WhatsApp</span>
+		<a href="https://wa.me/254743980340" target="_blank" rel="noopener noreferrer">+254743980340</a>
+	</div>
+
+	@if ($trialUrl)
+		<div class="trial-offer">
+			<div>
+				<div class="trial-title">Free trial <span>12 HOURS</span></div>
+				<p>Try the network before choosing a package.</p>
 			</div>
+			<a class="trial-button" href="{{ $trialUrl }}">Start trial <span aria-hidden="true">&#8594;</span></a>
+		</div>
+	@endif
+
+	<div class="package-heading">
+		<span>Available packages</span>
+		<span class="package-count">{{ $packages->count() }} PLANS</span>
+	</div>
+
+	<div class="package-list">
+		@forelse ($packages as $package)
+			<article class="package-row">
+				<div class="package-info">
+					<h2>{{ $package->name }}</h2>
+					<p>{{ $package->duration }} {{ $package->unit }}@if (($package->device_limit ?? 1) > 1) <span class="device-count">· {{ $package->device_limit }} devices</span>@endif</p>
+				</div>
+				<div class="package-action">
+					<strong>KSh {{ number_format((float) $package->price, 0) }}</strong>
+					<a class="buy-button" href="{{ route('payments.show', array_merge(['package' => $package->id], $portalContext)) }}" aria-label="Buy {{ $package->name }} for KSh {{ number_format((float) $package->price, 0) }}">
+						Buy <span aria-hidden="true">&#8599;</span>
+					</a>
+				</div>
+			</article>
 		@empty
-			<p class="text-center text-muted">No internet packages are available right now.</p>
+			<p class="empty-state">No packages are available right now.</p>
 		@endforelse
 	</div>
-</section>
 
+	<p class="portal-legal">Payments are verified before Wi-Fi access is enabled.<br><a class="terms-link" href="{{ route('terms') }}">Terms &amp; conditions</a></p>
+</section>
 @endsection

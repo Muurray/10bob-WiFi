@@ -1,18 +1,15 @@
 <?php
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\PaymentController;
-use App\Models\Package;
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PackageController;
+use App\Http\Controllers\PortalController;
 
 Route::resource('/admin/packages', PackageController::class);
 
-Route::get('/', function () {
-    $packages = Package::query()->where('active', true)->orderBy('price')->get();
-
-    return view('customer.index', compact('packages'));
-})->name('home');
+Route::get('/', [PortalController::class, 'packages'])->name('home');
+Route::get('/buy/packages', [PortalController::class, 'packages'])->name('portal.packages');
+Route::get('/terms', [PortalController::class, 'terms'])->name('terms');
 
 Route::get('/voucher', function () {
     return view('customer.voucher');

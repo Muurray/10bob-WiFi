@@ -22,6 +22,8 @@ New Package
 
 <th>Duration</th>
 
+<th>Devices</th>
+
 <th>Status</th>
 
 </tr>
@@ -39,6 +41,8 @@ New Package
 <td>KES {{ number_format($package->price,2) }}</td>
 
 <td>{{ $package->duration }} {{ $package->unit }}</td>
+
+<td>{{ $package->device_limit }} {{ Str::plural('device', $package->device_limit) }}</td>
 
 <td>
 @if($package->active)

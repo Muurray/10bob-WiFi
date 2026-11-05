@@ -4,7 +4,7 @@
 
 <h2>Create Internet Package</h2>
 
-<form method="POST" action="{{ route('packages.store') }}">
+<form method="POST" action="{{ route('admin.packages.store') }}">
 
 @csrf
 
@@ -45,6 +45,20 @@
 <option>Day</option>
 
 <option>Days</option>
+
+</select>
+
+</div>
+
+<div class="mb-3">
+
+<label for="device_limit">Simultaneous devices</label>
+
+<select id="device_limit" name="device_limit" class="form-control" required>
+
+<option value="1" selected>1 device</option>
+
+<option value="2">2 devices</option>
 
 </select>
 
